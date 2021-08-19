@@ -21,19 +21,44 @@ namespace TestLib
         }
 
         [Test]
-        public void CheckMessageFrom()
+        public void CheckMessageFromPC_ByHotkeys()
         {
+            DeleteFile();
             var wh = new NotepadHelper();
             wh.CreateMessageFileWithHotkeys();
             var file = new FileInfo(messageFilePath);
-            string text = "";
 
+            string text;
             using (StreamReader reader = file.OpenText())
             {
                 text = reader.ReadLine();
             }
 
             Assert.That(text, Is.EqualTo("I'm alive!!! (c) Skynet"));
+        }
+
+        [Test]
+        public void CheckMessageFromPc_ByMenuManipulation()
+        {
+            DeleteFile();
+            var wh = new NotepadHelper();
+            wh.CreateMessageFileWithMenuInteraction();
+            var file = new FileInfo(messageFilePath);
+
+            string text;
+            using (StreamReader reader = file.OpenText())
+            {
+                text = reader.ReadLine();
+            }
+
+            Assert.That(text, Is.EqualTo("I'm alive!!! (c) Skynet"));
+        }
+
+
+        public void DeleteFile()
+        {
+            var file = new FileInfo(messageFilePath);
+            if (file.Exists) file.Delete();
         }
     }
 }
