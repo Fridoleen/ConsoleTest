@@ -1,0 +1,1 @@
+Task is to open Word, type something there, check for autocorrection
