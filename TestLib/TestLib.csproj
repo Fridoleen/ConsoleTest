@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WordManipulation\WordManipulation.csproj" />
+    <ProjectReference Include="..\WordManipulation\WinAppManipulator.csproj" />
   </ItemGroup>
 
 </Project>

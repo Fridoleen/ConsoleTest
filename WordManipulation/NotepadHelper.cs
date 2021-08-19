@@ -1,0 +1,6 @@
+﻿namespace WinAppManipulator
+{
+    class NotepadHelper
+    {
+    }
+}
