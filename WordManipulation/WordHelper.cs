@@ -7,7 +7,7 @@ using FlaUI.UIA3;
 using System;
 using System.Threading;
 
-namespace WordManipulation
+namespace WinAppManipulator
 {
     public class WordHelper
     {

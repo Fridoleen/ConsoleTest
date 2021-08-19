@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 using System.Threading;
-using WordManipulation;
+using WinAppManipulator;
 
 namespace TestLib
 {
@@ -23,8 +23,8 @@ namespace TestLib
         [Test]
         public void CheckMessageFrom()
         {
-            var wh = new WordHelper();
-            wh.OpenAndCloseNotepad();
+            var wh = new NotepadHelper();
+            wh.CreateMessageFileWithHotkeys();
             var file = new FileInfo(messageFilePath);
             string text = "";
 
