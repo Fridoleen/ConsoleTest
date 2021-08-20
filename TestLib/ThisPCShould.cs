@@ -20,6 +20,7 @@ namespace TestLib
             Assert.AreEqual(true, wh.OpenAndCloseWord());
         }
 
+        [Ignore("This one works")]
         [Test]
         public void CheckMessageFromPC_ByHotkeys()
         {
@@ -39,11 +40,12 @@ namespace TestLib
 
         [Test]
         public void CheckMessageFromPc_ByMenuManipulation()
-        {
-            DeleteFile();
+        {            
             var wh = new NotepadHelper();
+            DeleteFile();
             wh.CreateMessageFileWithMenuInteraction();
             var file = new FileInfo(messageFilePath);
+            Thread.Sleep(500);
 
             string text;
             using (StreamReader reader = file.OpenText())
@@ -55,7 +57,7 @@ namespace TestLib
         }
 
 
-        public void DeleteFile()
+        private void DeleteFile()
         {
             var file = new FileInfo(messageFilePath);
             if (file.Exists) file.Delete();

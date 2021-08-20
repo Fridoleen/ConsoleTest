@@ -2,6 +2,7 @@
 using FlaUI.Core.AutomationElements;
 using FlaUI.Core.Conditions;
 using FlaUI.Core.Input;
+using FlaUI.Core.Tools;
 using FlaUI.Core.WindowsAPI;
 using FlaUI.UIA3;
 using System;
@@ -47,16 +48,17 @@ namespace WinAppManipulator
             mainWindowNotepad.FindFirstDescendant(cf.ByName("Text Editor")).AsTextBox().Enter("I'm alive!!! (c) Skynet");
 
             //Find and open File menu
-            var fileMenu = mainWindowNotepad.FindFirstDescendant(cf.ByAutomationId("MenuBar")).AsMenu().Items["File"];
-            fileMenu.Expand();
+            var fileMenu = mainWindowNotepad.FindFirstDescendant("MenuBar");
+            fileMenu.AsMenu().Items["File"].Click();
+            Thread.Sleep(500);
 
-            //Find and press [Save As...] button
-            var collection = mainWindowNotepad.FindAllDescendants(cf.ByAutomationId("4"));
-            collection[0].Click();
+            //mainWindowNotepad.FindFirstDescendant("4").AsButton().Click();
 
-            //Find filename field and enter file name
-            var collection2 = mainWindowNotepad.FindAllDescendants(cf.ByAutomationId("1001"));
-            collection2[0].AsTextBox().Enter("Message_from_your_PC");
+            mainWindowNotepad.FindFirstDescendant(cf.ByName("Save As...")).AsButton().Click();
+
+            Thread.Sleep(500);
+
+            mainWindowNotepad.FindFirstDescendant("1001").AsTextBox().Enter("Message_from_your_PC");
 
             //Press save button
             mainWindowNotepad.FindFirstDescendant(cf.ByName("Save")).AsButton().Click();
