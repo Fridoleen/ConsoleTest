@@ -17,24 +17,26 @@ namespace WinAppManipulator
         {
             using (var application = Application.Launch(@"C:\Program Files (x86)\Microsoft Office\root\Office16\WINWORD.EXE"))
             {
+                //TODO: Check what is necessary and what is not
                 application.WaitWhileBusy(TimeSpan.FromSeconds(5));
-                application.WaitWhileMainHandleIsMissing(TimeSpan.FromSeconds(5));
-                var screen = application.GetMainWindow(new UIA3Automation());
-                var cf = new ConditionFactory(new UIA3PropertyLibrary());
 
-                var button = Retry.Find(() => screen.FindFirstDescendant(cf.ByName("Справка")),
-                        new RetrySettings
-                        {
-                            Timeout = TimeSpan.FromSeconds(2),
-                            Interval = TimeSpan.FromMilliseconds(500)
-                        }
-                    );
+                using (var automation = new UIA3Automation())
+                {
+                    var screen = application.GetMainWindow(automation);
+                    var cf = new ConditionFactory(new UIA3PropertyLibrary());
 
-                var img = Capture.MainScreen();
+                    var button = Retry.Find(() => screen.FindFirstDescendant(cf.ByName("Справка")),
+                            new RetrySettings
+                            {
+                                Timeout = TimeSpan.FromSeconds(2),
+                                Interval = TimeSpan.FromMilliseconds(500)
+                            }
+                        );        
+
+                    return Capture.MainScreen();                   
+                }
 
                 application.Close();
-
-                return img;
             }            
         }
 
