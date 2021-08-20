@@ -14,7 +14,7 @@ namespace TestLib
         const string messageFilePath = @"G:\Downloads\Message_from_your_PC.txt";
 
         //[AllureStep("OpenAndCloseWord")]
-        //[Ignore("Unnecessary")]
+        [Ignore("Unnecessary")]
         [Test]
         public void OpenAndCloseWord()
         {
@@ -30,10 +30,15 @@ namespace TestLib
             //AllureLifecycle.Instance.AddAttachment("Word has been opened", "image/png", @"G:\Downloads\WordWasOpenedEvidence.png");
         }
 
-        [Ignore("Not implemented")]
+        //[Ignore("Works just fine")]
         [Test]
         public void CheckIfPannelIsHidden()
         {
+            var wh = new WordHelper();
+
+            wh.DisableBottomPannel();
+
+            Assert.That(wh.CheckIfPannelIsAccesible, Is.EqualTo(false));
             
         }
 
