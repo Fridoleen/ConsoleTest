@@ -20,7 +20,7 @@ namespace TestLib
             Assert.AreEqual(true, wh.OpenAndCloseWord());
         }
 
-        [Ignore("This one works")]
+        //[Ignore("This one works")]
         [Test]
         public void CheckMessageFromPC_ByHotkeys()
         {
@@ -38,6 +38,7 @@ namespace TestLib
             Assert.That(text, Is.EqualTo("I'm alive!!! (c) Skynet"));
         }
 
+        [Ignore("This one works fine")]
         [Test]
         public void CheckMessageFromPc_ByMenuManipulation()
         {            
