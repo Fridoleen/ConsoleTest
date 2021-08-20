@@ -41,26 +41,31 @@ namespace WinAppManipulator
         public void CreateMessageFileWithMenuInteraction()
         {
             var application = Application.Launch("notepad.exe");
+
             var mainWindowNotepad = application.GetMainWindow(new UIA3Automation(), TimeSpan.FromSeconds(2));
             ConditionFactory cf = new ConditionFactory(new UIA3PropertyLibrary());
 
-            //Enter text in a new window
+
             mainWindowNotepad.FindFirstDescendant(cf.ByName("Text Editor")).AsTextBox().Enter("I'm alive!!! (c) Skynet");
 
-            //Find and open File menu
-            var fileMenu = mainWindowNotepad.FindFirstDescendant("MenuBar");
-            fileMenu.AsMenu().Items["File"].Click();
-            Thread.Sleep(500);
+            mainWindowNotepad.FindFirstDescendant("MenuBar").AsMenu().Items["File"].Click();
 
-            //mainWindowNotepad.FindFirstDescendant("4").AsButton().Click();
+            Retry.Find(() => mainWindowNotepad.FindFirstDescendant(cf.ByName("Save As...")),
+                new RetrySettings
+                {
+                    Timeout = TimeSpan.FromSeconds(2),
+                    Interval = TimeSpan.FromMilliseconds(500)
+                }
+            ).Click();
 
-            mainWindowNotepad.FindFirstDescendant(cf.ByName("Save As...")).AsButton().Click();
+            Retry.Find(() => mainWindowNotepad.FindFirstDescendant("1001"),
+                new RetrySettings
+                {
+                    Timeout = TimeSpan.FromSeconds(2),
+                    Interval = TimeSpan.FromMilliseconds(500)
+                }
+            ).AsTextBox().Enter("Message_from_your_PC");
 
-            Thread.Sleep(500);
-
-            mainWindowNotepad.FindFirstDescendant("1001").AsTextBox().Enter("Message_from_your_PC");
-
-            //Press save button
             mainWindowNotepad.FindFirstDescendant(cf.ByName("Save")).AsButton().Click();
 
             application.CloseTimeout = TimeSpan.FromSeconds(2);
