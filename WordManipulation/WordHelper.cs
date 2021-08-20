@@ -38,16 +38,6 @@ namespace WinAppManipulator
             }            
         }
 
-        public void CreateMessageByHotkeys()
-        {
-
-        }
-
-        public void CreateMessageByMenus()
-        {
-
-        }
-
         public void PinTopPannelByHotkeys()
         {
 

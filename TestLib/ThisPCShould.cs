@@ -18,11 +18,11 @@ namespace TestLib
         [Test]
         public void OpenAndCloseWord()
         {
+            (new FileInfo(@"G:\Downloads\Screenshots\WordWasOpenedEvidence.png")).Delete();
+
             var wh = new WordHelper();
 
             var scr = wh.OpenAndCloseWord();
-
-            Thread.Sleep(5000);
 
             Assert.AreNotEqual(null, scr);
 
