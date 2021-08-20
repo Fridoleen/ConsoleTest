@@ -3,6 +3,8 @@ using System;
 using System.IO;
 using System.Threading;
 using WinAppManipulator;
+using Allure.Commons;
+using NUnit.Allure.Steps;
 
 namespace TestLib
 {
@@ -11,20 +13,36 @@ namespace TestLib
     {
         const string messageFilePath = @"G:\Downloads\Message_from_your_PC.txt";
 
-        [Ignore("Unnecessary")]
+        //[AllureStep("OpenAndCloseWord")]
+        //[Ignore("Unnecessary")]
         [Test]
-        public void OpenWord()
+        public void OpenAndCloseWord()
         {
             var wh = new WordHelper();
 
-            Assert.AreEqual(true, wh.OpenAndCloseWord());
+            var scr = wh.OpenAndCloseWord();
+
+            Thread.Sleep(5000);
+
+            Assert.AreNotEqual(null, scr);
+
+            scr.ToFile(@"G:\Downloads\Screenshots\WordWasOpenedEvidence.png");
+            //AllureLifecycle.Instance.AddAttachment("Word has been opened", "image/png", @"G:\Downloads\WordWasOpenedEvidence.png");
         }
 
-        //[Ignore("This one works")]
+        [Ignore("Not implemented")]
+        [Test]
+        public void CheckIfPannelIsHidden()
+        {
+            
+        }
+
+        [AllureStep("Hotkeys-way txt message file creation")]
+        [Ignore("This one works")]
         [Test]
         public void CheckMessageFromPC_ByHotkeys()
         {
-            DeleteFile();
+            DeleteFileTxt();
             var wh = new NotepadHelper();
             wh.CreateMessageFileWithHotkeys();
             var file = new FileInfo(messageFilePath);
@@ -38,15 +56,15 @@ namespace TestLib
             Assert.That(text, Is.EqualTo("I'm alive!!! (c) Skynet"));
         }
 
+        [AllureStep("Menu-way txt message file creation")]
         [Ignore("This one works fine")]
         [Test]
         public void CheckMessageFromPc_ByMenuManipulation()
         {            
             var wh = new NotepadHelper();
-            DeleteFile();
+            DeleteFileTxt();
             wh.CreateMessageFileWithMenuInteraction();
-            var file = new FileInfo(messageFilePath);
-            Thread.Sleep(500);
+            var file = new FileInfo(messageFilePath);            
 
             string text;
             using (StreamReader reader = file.OpenText())
@@ -58,7 +76,7 @@ namespace TestLib
         }
 
 
-        private void DeleteFile()
+        private void DeleteFileTxt()
         {
             var file = new FileInfo(messageFilePath);
             if (file.Exists) file.Delete();
