@@ -24,10 +24,10 @@ namespace WinAppManipulator
                     var screen = application.GetMainWindow(automation);
                     var cf = new ConditionFactory(new UIA3PropertyLibrary());
 
-                    var button = Retry.Find(() => screen.FindFirstDescendant(cf.ByName("Справка")),
+                    var button = Retry.Find(() => screen.FindFirstDescendant(cf.ByName("Help")),
                             new RetrySettings
                             {
-                                Timeout = TimeSpan.FromSeconds(2),
+                                Timeout = TimeSpan.FromSeconds(3),
                                 Interval = TimeSpan.FromMilliseconds(500)
                             }
                         );
@@ -42,11 +42,11 @@ namespace WinAppManipulator
         {
             using (var application = Application.Launch(@"C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"))
             {
-                //application.WaitWhileMainHandleIsMissing(TimeSpan.FromSeconds(5));
-
                 using (var automation = new UIA3Automation())
                 {
+                    //TODO: Change this into acceptable form
                     Thread.Sleep(TimeSpan.FromSeconds(3));
+
                     var screen = application.GetMainWindow(automation);
                     var cf = new ConditionFactory(new UIA3PropertyLibrary());
 
@@ -70,11 +70,11 @@ namespace WinAppManipulator
         {
             using (var application = Application.Launch(@"C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"))
             {
-                //application.WaitWhileBusy(TimeSpan.FromSeconds(2));
-
                 using (var automation = new UIA3Automation())
                 {
+                    //TODO: Change this too
                     Thread.Sleep(TimeSpan.FromSeconds(3));
+
                     var screen = application.GetMainWindow(automation);
                     var cf = new ConditionFactory(new UIA3PropertyLibrary());
 
