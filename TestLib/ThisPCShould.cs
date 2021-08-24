@@ -30,23 +30,21 @@ namespace TestLib
             //AllureLifecycle.Instance.AddAttachment("Word has been opened", "image/png", @"G:\Downloads\WordWasOpenedEvidence.png");
         }
 
+        //[AllureStep("CheckIf_WordLowerPannel_IsMissing")]
         //[Ignore("Works just fine")]
         [Test]
         public void CheckIfPannelIsHidden()
         {
             var wh = new WordHelper();
-
             wh.DisableBottomPannel();
 
-            Thread.Sleep(TimeSpan.FromSeconds(5));
+            Thread.Sleep(TimeSpan.FromSeconds(2));
 
 
             wh = new WordHelper();
             var checker = wh.CheckIfPannelIsAccesible();
 
-            Thread.Sleep(TimeSpan.FromSeconds(2));
-
-            Assert.That(checker, Is.EqualTo(false));            
+            Assert.That(checker, Is.EqualTo(true));            
         }
 
         //[AllureStep("Hotkeys-way txt message file creation")]
