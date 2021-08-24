@@ -38,11 +38,18 @@ namespace TestLib
 
             wh.DisableBottomPannel();
 
-            Assert.That(wh.CheckIfPannelIsAccesible, Is.EqualTo(false));
-            
+            Thread.Sleep(TimeSpan.FromSeconds(5));
+
+
+            wh = new WordHelper();
+            var checker = wh.CheckIfPannelIsAccesible();
+
+            Thread.Sleep(TimeSpan.FromSeconds(2));
+
+            Assert.That(checker, Is.EqualTo(false));            
         }
 
-        [AllureStep("Hotkeys-way txt message file creation")]
+        //[AllureStep("Hotkeys-way txt message file creation")]
         [Ignore("This one works")]
         [Test]
         public void CheckMessageFromPC_ByHotkeys()
@@ -61,7 +68,7 @@ namespace TestLib
             Assert.That(text, Is.EqualTo("I'm alive!!! (c) Skynet"));
         }
 
-        [AllureStep("Menu-way txt message file creation")]
+        //[AllureStep("Menu-way txt message file creation")]
         [Ignore("This one works fine")]
         [Test]
         public void CheckMessageFromPc_ByMenuManipulation()

@@ -15,7 +15,7 @@ namespace WinAppManipulator
     {
         public CaptureImage OpenAndCloseWord()
         {
-            using (var application = Application.Launch(@"C:\Program Files (x86)\Microsoft Office\root\Office16\WINWORD.EXE"))
+            using (var application = Application.Launch(@"C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"))
             {
                 application.WaitWhileBusy(TimeSpan.FromSeconds(2));
 
@@ -30,47 +30,55 @@ namespace WinAppManipulator
                                 Timeout = TimeSpan.FromSeconds(2),
                                 Interval = TimeSpan.FromMilliseconds(500)
                             }
-                        );        
+                        );
 
+                    application.Close();
                     return Capture.MainScreen();                   
-                }
+                }                
             }            
         }
 
         public void DisableBottomPannel()
         {
-            using (var application = Application.Launch(@"C:\Program Files (x86)\Microsoft Office\root\Office16\WINWORD.EXE"))
+            using (var application = Application.Launch(@"C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"))
             {
-                application.WaitWhileBusy(TimeSpan.FromSeconds(2));
+                application.WaitWhileBusy(TimeSpan.FromSeconds(5));
 
                 using (var automation = new UIA3Automation())
                 {
+                    Thread.Sleep(TimeSpan.FromSeconds(5));
                     var screen = application.GetMainWindow(automation);
                     var cf = new ConditionFactory(new UIA3PropertyLibrary());
 
-                    Retry.Find(() => screen.FindFirstDescendant(cf.ByName("Новый документ")),
-                            new RetrySettings
-                            {
-                                Timeout = TimeSpan.FromSeconds(2),
-                                Interval = TimeSpan.FromMilliseconds(500)
-                            }
-                        ).Click();
+                    screen.FindFirstDescendant("AIOStartDocument").AsButton().Click();
+                    //Retry.Find(() => screen.FindFirstDescendant("AIOStartDocument"),
+                    //        new RetrySettings
+                    //        {
+                    //            Timeout = TimeSpan.FromSeconds(2),
+                    //            Interval = TimeSpan.FromMilliseconds(500)
+                    //        }
+                    //    ).Click();
 
-                    screen.FindFirstDescendant(cf.ByName("Свернуть ленту")).AsButton().Click();
+                    Thread.Sleep(TimeSpan.FromSeconds(5));
+
+                    screen.FindFirstDescendant(cf.ByName("Collapse the Ribbon")).AsButton().Click();
                 }
 
                 application.Close();
+
+                Thread.Sleep(TimeSpan.FromSeconds(5));
             }
         }
 
         public bool CheckIfPannelIsAccesible()
         {
-            using (var application = Application.Launch(@"C:\Program Files (x86)\Microsoft Office\root\Office16\WINWORD.EXE"))
+            using (var application = Application.Launch(@"C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"))
             {
                 application.WaitWhileBusy(TimeSpan.FromSeconds(2));
 
                 using (var automation = new UIA3Automation())
                 {
+                    Thread.Sleep(TimeSpan.FromSeconds(5));
                     var screen = application.GetMainWindow(automation);
                     var cf = new ConditionFactory(new UIA3PropertyLibrary());
 
@@ -82,13 +90,16 @@ namespace WinAppManipulator
                             }
                         ).Click();
 
-                    var element = Retry.Find(() => screen.FindFirstDescendant(cf.ByName("Нижняя лента")),
+                    Thread.Sleep(TimeSpan.FromSeconds(5));
+
+                    var element = Retry.Find(() => screen.FindFirstDescendant(cf.ByName("Lower Ribbon")),
                             new RetrySettings
                             {
                                 Timeout = TimeSpan.FromSeconds(2),
                                 Interval = TimeSpan.FromMilliseconds(500)
                             }
                         );
+
                     return element != null;
                 }
             }
